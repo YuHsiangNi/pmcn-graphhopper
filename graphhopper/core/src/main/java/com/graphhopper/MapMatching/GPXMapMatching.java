@@ -11,6 +11,8 @@ import com.graphhopper.matching.MatchResult;
 import com.graphhopper.routing.AlgorithmOptions;
 import com.graphhopper.util.GPXEntry;
 import com.graphhopper.util.PointList;
+import com.graphhopper.util.Translation;
+import com.graphhopper.util.TranslationMap;
 import com.graphhopper.util.shapes.GHPoint;
 
 import java.sql.SQLException;
@@ -19,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  author Yu-Hsiang Lin
@@ -31,7 +34,7 @@ public class GPXMapMatching {
     private ArrayList<Integer> edge_ID = new ArrayList<>();
     private ArrayList<String>  MatchingPoint_Array = new ArrayList<String>();
     private GraphHopper graphHopper;
-
+    public ArrayList<String> EdgeName = new ArrayList<>();
 
     public GPXMapMatching(GraphHopper graphHopper){
         this.graphHopper = graphHopper;
@@ -53,10 +56,14 @@ public class GPXMapMatching {
         List<GPXEntry> resultEntries = new ArrayList<GPXEntry>(mr.getEdgeMatches().size());
 
         long time = 0;
+        double distance = 0;
         for (int emIndex = 0; emIndex < mr.getEdgeMatches().size(); emIndex++) {
             EdgeMatch em = mr.getEdgeMatches().get(emIndex);
             PointList pl = em.getEdgeState().fetchWayGeometry(emIndex == 0 ? 3 : 2);
             edge_ID.add(em.getEdgeState().getEdge());
+            distance += em.getEdgeState().getDistance();
+            System.out.println("Edge: " + em.getEdgeState().getEdge() + " Length:" + em.getEdgeState().getDistance() + " Name:" + em.getEdgeState().getName());
+            EdgeName.add(em.getEdgeState().getName());
 
             for (int i = 0; i < pl.size(); i++) {
                 if (pl.is3D()) {
@@ -69,7 +76,7 @@ public class GPXMapMatching {
             }
         }
 
-        System.out.println("MapMatching get Edge:" + edge_ID);
+        System.out.println("MapMatching get Edge:" + edge_ID + " Total Distance:" + distance);
         //consider next times training data
         Entries.clear();
 
@@ -123,13 +130,13 @@ public class GPXMapMatching {
 
     /**Training GPX Edge**/
     private void TrainGpxForDB(){
-
+        //int dateCount = 9;
         DBHelper dbHelper = new DBHelper();
 
         /*test GET DB Data*/
         try {
             dbHelper.DBConnection();
-
+            //dateCount = dateCount + dbHelper.getTrainingTimes();
             dbHelper.TrainEdgeWeighting(edge_ID,getTime());
 
             dbHelper.DBClose();
@@ -147,6 +154,10 @@ public class GPXMapMatching {
         return simpleDateFormat.format(newTime);
     }
 
+    public ArrayList<String> getStreetName(){
+        return EdgeName;
+    }
+
 
     /**consider to return web GPX Point Array**/
     public ArrayList<String> GPXdoImport(int version){
@@ -158,6 +169,11 @@ public class GPXMapMatching {
         WithMapMatching();
 
         return MatchingPoint_Array;
+    }
+
+    /**experiment use every day train**/
+    private String getExperimentDate(int dateCount){
+        return "2019-06-" + dateCount + " 00:00:00";
     }
 
 

@@ -68,6 +68,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.graphhopper.util.Helper.*;
 import static com.graphhopper.util.Parameters.Algorithms.*;
+import static com.graphhopper.util.Parameters.Routing.INSTRUCTIONS;
 
 /**
  * Easy to use access point to configure import and (offline) routing.
@@ -1311,7 +1312,6 @@ public class GraphHopper implements GraphHopperAPI {
     }
     public boolean CheckStayPointSize(){ return plcStayPlace.size() > 0; }
     public boolean CheckTrajectorySize(){ return correctPointList.size() > 0; }
-    public boolean CheckFilterCount(){return FilterCount >= 36; }
     private int SumSameCount(){ return SamePointCount + gpxFilter.getSamePointCount(); }
 
     /**experiment Point Filter Algorithm to value**/
@@ -1445,9 +1445,10 @@ public class GraphHopper implements GraphHopperAPI {
         GHRequest req = new GHRequest(fromLat, fromLon, toLat, toLon).
                   setAlgorithm(Parameters.Algorithms.DIJKSTRA_BI).
                   setVehicle("foot").
+                  setLocale("zh-TW").
                   setWeighting("MyCustomWeighting");
 
-        req.getHints().put(Routing.INSTRUCTIONS,"false");
+        req.getHints().put(Routing.INSTRUCTIONS,"true");
 
         GHResponse resp = route(req);
         time = sw.stop().getSeconds();
@@ -1485,9 +1486,27 @@ public class GraphHopper implements GraphHopperAPI {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
             //plcStayPlace.clear();
         }
+    }
+
+    public void StorageStayPoint(double lat, double lon){
+        DBHelper StorageDB = new DBHelper();
+        int edge = 0;
+
+        try {
+            StorageDB.DBConnection();
+
+            QueryResult qr = locationIndex.findClosest(lat, lon, EdgeFilter.ALL_EDGES);
+            EdgeIteratorState qrClosestEdge = qr.getClosestEdge();
+            edge = qrClosestEdge.getEdge();
+            StorageDB.StorageSatyPlace(lat, lon, edge);
+
+            StorageDB.DBClose();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Storage Stay Point: " + lat + "," + lon + " Edge ID: " + edge);
     }
 
     public void ExportGPX(){

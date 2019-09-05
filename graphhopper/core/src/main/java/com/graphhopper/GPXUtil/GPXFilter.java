@@ -111,7 +111,7 @@ public class GPXFilter {
             sum += Speed[j];
         }
 
-        SpeedAver = sum / (DynamicWindowSize - 1);
+        SpeedAver = sum / (DynamicWindowSize);
 
         System.out.println("Speed Average: " + SpeedAver);
 

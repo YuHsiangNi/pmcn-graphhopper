@@ -55,6 +55,8 @@ public class GPXResource {
             @QueryParam("trajectory") @DefaultValue("f") String trajectory,
             @QueryParam("rawTrajectory") @DefaultValue("f") String rawFileTrajectory,
             @QueryParam("experiment") @DefaultValue("f") String experiment,
+            @QueryParam("setStay") @DefaultValue("f") String setStay,
+            @QueryParam("setPosition") @DefaultValue("f") String setPosition,
             @QueryParam("routing") @DefaultValue("f") String route){
 
         //route function
@@ -102,10 +104,9 @@ public class GPXResource {
         } else if(train.equalsIgnoreCase("t")) {
 
             int GPXIndex = Integer.valueOf(index);
-
             GPXMapMatching gpxFileMapMatching = new GPXMapMatching(graphHopper);
 
-            return Response.ok(WebHopper.JsonObject(gpxFileMapMatching.GPXdoImport(GPXIndex))).build();
+            return Response.ok(WebHopper.JsonObjectV3(gpxFileMapMatching.GPXdoImport(GPXIndex),gpxFileMapMatching.EdgeName)).build();
 
          //Storage Stay Place
         } else if(stay.equalsIgnoreCase("t")) {
@@ -146,6 +147,26 @@ public class GPXResource {
         } else if(experiment.equalsIgnoreCase("t")) {
 
             return Response.ok(WebHopper.JsonObject(graphHopper.ExperimentTrajectory())).build();
+
+        //Set and Storage Stay Position
+        } else if(setStay.equalsIgnoreCase("t")){
+
+            GHPoint StayPoint = gpxPoints.get(0);
+            double Staylat = StayPoint.getLat();
+            double Staylon = StayPoint.getLon();
+
+            graphHopper.StorageStayPoint(Staylat, Staylon);
+
+            return Response.ok(WebHopper.GResponse()).build();
+
+         //Set Now Position
+        } else if(setPosition.equalsIgnoreCase("t")){
+
+            GHPoint PositionPoint = gpxPoints.get(0);
+            fromlat = PositionPoint.getLat();
+            fromlon = PositionPoint.getLon();
+
+            return Response.ok(WebHopper.GResponse()).build();
         }
         else {
 

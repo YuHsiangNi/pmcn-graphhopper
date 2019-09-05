@@ -61,8 +61,7 @@ public class MyCustomWeighting extends AbstractWeighting {
         //System.out.println(edge.getDistance() / Math.exp(weightingAlpha));
         //System.out.println(" ");
 
-
-        return ((edge.getDistance() / 3600) / Math.exp(weightingAlpha) * 2) * (1 / (1 + frequency));
+        return (edge.getDistance() / (Math.exp(weightingAlpha) * 50)) * (1 / (1 + frequency));
     }
 
     @Override

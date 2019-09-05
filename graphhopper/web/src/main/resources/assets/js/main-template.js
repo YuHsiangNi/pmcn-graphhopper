@@ -63,6 +63,8 @@ var initCount =0;
 var locationGet = true;
 var locationStop = false;
 var HomeCoordObject;
+var PositionCoord;
+var RoutingSize = [];
 
 //var IntervalLocation;
 
@@ -192,7 +194,7 @@ $(document).ready(function (e) {
                 }
                 metaVersionInfo = messages.extractMetaVersionInfo(json);
 
-                mapLayer.initMap(bounds, setStartCoord, setIntermediateCoord, setEndCoord, setHomeCoord, urlParams.layer, urlParams.use_miles);
+                mapLayer.initMap(bounds, setStartCoord, setIntermediateCoord, setEndCoord, setHomeCoord, setStayCoord, setPositionCoord, urlParams.layer, urlParams.use_miles);
 
                 // execute query
                 initFromParams(urlParams, true);
@@ -437,14 +439,54 @@ function setEndCoord(e) {
 /**function e is event**/
 function setHomeCoord(e) {
     HomeCoordObject = e.latlng.wrap();
+    mapLayer.createMarkerHome(HomeCoordObject.lat,HomeCoordObject.lng);
+    RoutingSize[1] = 1;
 
+
+    if(RoutingSize[1] === 1 && RoutingSize[2] === 2){
+        routing();
+        RoutingSize[1] = 0;
+        RoutingSize[2] = 0;
+    }
+    /* Transfer Server
     var GPXc = new GHCustom();
-
     GPXc.SetHomeNode(HomeCoordObject.lat,HomeCoordObject.lng);
     GPXc.doRequest(GPXc.GPXurl, function (json) {
         mapLayer.createMarkerHome(HomeCoordObject.lat,HomeCoordObject.lng);
-    });
+    });*/
+}
 
+/**Set Stay Coords function**/
+function setStayCoord(e) {
+    var StayCoordObject = e.latlng.wrap();
+
+    var GPXc = new GHCustom();
+    GPXc.SetStayPlace(StayCoordObject.lat, StayCoordObject.lng);
+    GPXc.doRequest(GPXc.GPXurl, function (json) {
+        mapLayer.createMarkerStay(StayCoordObject.lat,StayCoordObject.lng);
+    });
+}
+
+/**Set Now Position Coords function**/
+function setPositionCoord(e) {
+    PositionCoord = e.latlng.wrap();
+    mapLayer.createMarkerGPX(PositionCoord.lat,PositionCoord.lng);
+    RoutingSize[2] = 2;
+
+
+    if(RoutingSize[1] === 1 && RoutingSize[2] === 2){
+        routing();
+        RoutingSize[1] = 0;
+        RoutingSize[2] = 0;
+    }
+
+    /* Transfer Server
+    var GPXc = new GHCustom();
+    GPXc.SetNowPosition(PositionCoord.lat, PositionCoord.lng);
+    GPXc.doRequest(GPXc.GPXurl, function (json) {
+        mapLayer.createMarkerGPX(PositionCoord.lat,PositionCoord.lng);
+    });
+    */
 }
 
 function routeIfAllResolved(doQuery) {
@@ -937,35 +979,6 @@ function RoutingLocation() {
     GHloc.getLocation();
 }
 
-/**navigation**/
-module.exports.routing = function(routingFromLat,routingFromLon){
-
-    var pathindex = 0;
-    var GPXc = new GHCustom();
-    GPXc.route(routingFromLat,routingFromLon,HomeCoordObject.lat,HomeCoordObject.lng);
-    GPXc.doRequest(GPXc.GPXurl, function (json) {
-        console.log("this is json");
-        console.log(json);
-
-        var path = json.paths[pathindex];
-        path_point = path.points.coordinates;
-        path_snapped_waypoints = path.snapped_waypoints.coordinates;
-        mapLayer.createMarkerGPX(path_snapped_waypoints[0][1],path_snapped_waypoints[0][0]);
-        drawLine();
-
-        var firstPath = json.paths[pathindex];
-        if (firstPath.bbox) {
-            var minLon = firstPath.bbox[0];
-            var minLat = firstPath.bbox[1];
-            var maxLon = firstPath.bbox[2];
-            var maxLat = firstPath.bbox[3];
-            var tmpB = new L.LatLngBounds(new L.LatLng(minLat, minLon), new L.LatLng(maxLat, maxLon));
-            mapLayer.fitMapToBounds(tmpB);
-        }
-    });
-    console.log(GPXc.GPXurl);
-};
-
 /**set time to go get the location**/
 function Location(boolean) {
 
@@ -1073,6 +1086,34 @@ function showError(error) {
             x.innerHTML = "An unknown error occurred.";
             break;
     }
+}
+
+/**routing function**/
+function routing() {
+    var pathindex = 0;
+    var GPXc = new GHCustom();
+    GPXc.route(PositionCoord.lat,PositionCoord.lng,HomeCoordObject.lat,HomeCoordObject.lng);
+    GPXc.doRequest(GPXc.GPXurl, function (json) {
+        console.log("this is json");
+        console.log(json);
+
+        var path = json.paths[pathindex];
+        path_point = path.points.coordinates;
+        path_snapped_waypoints = path.snapped_waypoints.coordinates;
+        //mapLayer.createMarkerGPX(path_snapped_waypoints[0][1],path_snapped_waypoints[0][0]);
+        drawLine();
+
+        var firstPath = json.paths[pathindex];
+        if (firstPath.bbox) {
+            var minLon = firstPath.bbox[0];
+            var minLat = firstPath.bbox[1];
+            var maxLon = firstPath.bbox[2];
+            var maxLat = firstPath.bbox[3];
+            var tmpB = new L.LatLngBounds(new L.LatLng(minLat, minLon), new L.LatLng(maxLat, maxLon));
+            mapLayer.fitMapToBounds(tmpB);
+        }
+    });
+    console.log(GPXc.GPXurl);
 }
 
 /**delay function, not use**/
@@ -1300,5 +1341,34 @@ function ExperimentTrajectory(){
         drawLine2();
     });
 }
+
+/**navigation**/
+module.exports.routing = function(routingFromLat,routingFromLon){
+
+    var pathindex = 0;
+    var GPXc = new GHCustom();
+    GPXc.route(routingFromLat,routingFromLon,HomeCoordObject.lat,HomeCoordObject.lng);
+    GPXc.doRequest(GPXc.GPXurl, function (json) {
+        console.log("this is json");
+        console.log(json);
+
+        var path = json.paths[pathindex];
+        path_point = path.points.coordinates;
+        path_snapped_waypoints = path.snapped_waypoints.coordinates;
+        mapLayer.createMarkerGPX(path_snapped_waypoints[0][1],path_snapped_waypoints[0][0]);
+        drawLine();
+
+        var firstPath = json.paths[pathindex];
+        if (firstPath.bbox) {
+            var minLon = firstPath.bbox[0];
+            var minLat = firstPath.bbox[1];
+            var maxLon = firstPath.bbox[2];
+            var maxLat = firstPath.bbox[3];
+            var tmpB = new L.LatLngBounds(new L.LatLng(minLat, minLon), new L.LatLng(maxLat, maxLon));
+            mapLayer.fitMapToBounds(tmpB);
+        }
+    });
+    console.log(GPXc.GPXurl);
+};
 
 module.exports.setFlag = setFlag;

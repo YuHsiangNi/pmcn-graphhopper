@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?><gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" creator="Graphhopper version 20" version="1.1" xmlns:gh="https://graphhopper.com/public/schema/gpx/1.1">
+<metadata><copyright author="OpenStreetMap contributors"/><link href="http://graphhopper.com"><text>GraphHopper GPX</text></link><time>1970-01-01T00:00:00Z</time></metadata>
+<trk><name>GraphHopper GPX Track</name><trkseg>
+<trkpt lat="22.992905" lon="120.210121"><time>2019-07-05T12:15:25Z</time></trkpt>
+<trkpt lat="22.992900" lon="120.210221"><time>2019-07-05T12:15:30Z</time></trkpt>
+<trkpt lat="22.992900" lon="120.210321"><time>2019-07-05T12:15:35Z</time></trkpt>
+<trkpt lat="22.992901" lon="120.210401"><time>2019-07-05T12:15:40Z</time></trkpt>
+<trkpt lat="22.992901" lon="120.210480"><time>2019-07-05T12:15:50Z</time></trkpt>
+<trkpt lat="22.992800" lon="120.210595"><time>2019-07-05T12:16:10Z</time></trkpt>
+<trkpt lat="22.992700" lon="120.210588"><time>2019-07-05T12:16:15Z</time></trkpt>
+<trkpt lat="22.992600" lon="120.210580"><time>2019-07-05T12:16:18Z</time></trkpt>
+<trkpt lat="22.992500" lon="120.210580"><time>2019-07-05T12:16:20Z</time></trkpt>
+<trkpt lat="22.992330" lon="120.210550"><time>2019-07-05T12:16:25Z</time></trkpt>
+<trkpt lat="22.992200" lon="120.210530"><time>2019-07-05T12:16:30Z</time></trkpt>
+<trkpt lat="22.992000" lon="120.210520"><time>2019-07-05T12:16:35Z</time></trkpt>
+<trkpt lat="22.991900" lon="120.210520"><time>2019-07-05T12:16:40Z</time></trkpt>
+<trkpt lat="22.991850" lon="120.210520"><time>2019-07-05T12:16:45Z</time></trkpt>
+<trkpt lat="22.991770" lon="120.210550"><time>2019-07-05T12:16:50Z</time></trkpt>
+<trkpt lat="22.991700" lon="120.210680"><time>2019-07-05T12:16:55Z</time></trkpt>
+<trkpt lat="22.991630" lon="120.210880"><time>2019-07-05T12:17:00Z</time></trkpt>
+<trkpt lat="22.991600" lon="120.210980"><time>2019-07-05T12:17:05Z</time></trkpt>
+<trkpt lat="22.991601" lon="120.211073"><time>2019-07-05T12:17:10Z</time></trkpt>
+<trkpt lat="22.991601" lon="120.211343"><time>2019-07-05T12:17:16Z</time></trkpt>
+<trkpt lat="22.991601" lon="120.211373"><time>2019-07-05T12:17:30Z</time></trkpt>
+<trkpt lat="22.991601" lon="120.211353"><time>2019-07-05T12:17:40Z</time></trkpt>
+<trkpt lat="22.991601" lon="120.211373"><time>2019-07-05T12:17:50Z</time></trkpt>
+<trkpt lat="22.991601" lon="120.211373"><time>2019-07-05T12:17:52Z</time></trkpt>
+<trkpt lat="22.99146" lon="120.211575"><time>2019-07-05T12:18:21Z</time></trkpt>
+<trkpt lat="22.991262" lon="120.211549"><time>2019-07-05T12:18:41Z</time></trkpt>
+<trkpt lat="22.990979" lon="120.211598"><time>2019-07-05T12:19:06Z</time></trkpt>
+<trkpt lat="22.990818" lon="120.211589"><time>2019-07-05T12:19:26Z</time></trkpt>
+<trkpt lat="22.990542" lon="120.211572"><time>2019-07-05T12:20:01Z</time></trkpt>
+<trkpt lat="22.990244" lon="120.21155"><time>2019-07-05T12:20:21Z</time></trkpt>
+<trkpt lat="22.990084" lon="120.211604"><time>2019-07-05T12:20:51Z</time></trkpt>
+<trkpt lat="22.989739" lon="120.211469"><time>2019-07-05T12:21:11Z</time></trkpt>
+<trkpt lat="22.989478" lon="120.211461"><time>2019-07-05T12:21:41Z</time></trkpt>
+<trkpt lat="22.989318" lon="120.211433"><time>2019-07-05T12:21:51Z</time></trkpt>
+<trkpt lat="22.989031" lon="120.211054"><time>2019-07-05T12:22:26Z</time></trkpt>
+<trkpt lat="22.988821" lon="120.211116"><time>2019-07-05T12:23:11Z</time></trkpt>
+<trkpt lat="22.988923" lon="120.210544"><time>2019-07-05T12:23:56Z</time></trkpt>
+<trkpt lat="22.988959" lon="120.210364"><time>2019-07-05T12:24:21Z</time></trkpt>
+<trkpt lat="22.98894" lon="120.210179"><time>2019-07-05T12:24:41Z</time></trkpt>
+<trkpt lat="22.988865" lon="120.210014"><time>2019-07-05T12:25:11Z</time></trkpt>
+<trkpt lat="22.988957" lon="120.209699"><time>2019-07-05T12:25:21Z</time></trkpt>
+<trkpt lat="22.988954" lon="120.209366"><time>2019-07-05T12:25:51Z</time></trkpt>
+<trkpt lat="22.988981" lon="120.209122"><time>2019-07-05T12:26:31Z</time></trkpt>
+<trkpt lat="22.988986" lon="120.208927"><time>2019-07-05T12:26:51Z</time></trkpt>
+
+</trkseg>
+</trk>
+</gpx>

@@ -81,6 +81,15 @@ public class WebHopper {
         return json;
     }
 
+    public static ObjectNode JsonObjectV3(ArrayList<String> pointList, ArrayList<String> NameList){
+
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        json.putPOJO("GPX_Point",pointList);
+        json.putPOJO("Street",NameList);
+
+        return json;
+    }
+
 
     public static ObjectNode RouteJsonObject(GHResponse ghRsp){
 
@@ -101,6 +110,7 @@ public class WebHopper {
             if (ar.getPoints().getSize() >= 2) {
                 jsonPath.putPOJO("bbox", ar.calcBBox2D());
             }
+            jsonPath.putPOJO("instructions", ar.getInstructions());
         }
 
         return json;

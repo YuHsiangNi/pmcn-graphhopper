@@ -8,6 +8,9 @@ var menuStart;
 var menuIntermediate;
 var menuEnd;
 var menuHome;
+var menuStay;
+var menuPosition;
+
 var elevationControl = null;
 var fullscreenControl = null;
 
@@ -48,7 +51,7 @@ function adjustMapSize() {
     // somehow this does not work: map.invalidateSize();
 }
 
-function initMap(bounds, setStartCoord, setIntermediateCoord, setEndCoord, setHomeCoord, selectLayer, useMiles) {
+function initMap(bounds, setStartCoord, setIntermediateCoord, setEndCoord, setHomeCoord, setStayCoord , setPositionCoord ,selectLayer, useMiles) {
     adjustMapSize();
     // console.log("init map at " + JSON.stringify(bounds));
 
@@ -107,12 +110,25 @@ function initMap(bounds, setStartCoord, setIntermediateCoord, setEndCoord, setHo
         callback: setHomeCoord,
         index: 3
     };
+    var _StayItem ={
+        text: ("Set Stay"),
+        icon: './img/marker_hole.png',
+        callback: setStayCoord,
+        index: 5
+    };
+    var _PositionItem ={
+        text: ("Set Position"),
+        icon: './img/marker-from.png',
+        callback: setPositionCoord,
+        index: 4
+    };
 
     menuStart = map.contextmenu.insertItem(_startItem, _startItem.index);
     menuIntermediate = map.contextmenu.insertItem(_intItem, _intItem.index);
     menuEnd = map.contextmenu.insertItem(_endItem, _endItem.index);
     menuHome = map.contextmenu.insertItem(_homeItem,_homeItem.index);
-
+    menuStay = map.contextmenu.insertItem(_StayItem,_StayItem.index);
+    menuPosition = map.contextmenu.insertItem(_PositionItem,_PositionItem.index);
 
     var zoomControl = new L.Control.Zoom({
         position: 'topleft',
@@ -363,6 +379,10 @@ module.exports.createMarkerGPX = function(GPX_lat, GPX_lng){
 
 module.exports.createMarkerStay = function(Stay_lat, Stay_lng){
     L.marker([Stay_lat,Stay_lng],{icon:iconStay}).addTo(routingLayer);
+};
+
+module.exports.createMarkerHome = function(Home_lat, Home_lng){
+    L.marker([Home_lat,Home_lng],{icon:iconFrom}).addTo(routingLayer);
 };
 
 module.exports.createMarker = function (index, coord, setToEnd, setToStart, deleteCoord, ghRequest) {

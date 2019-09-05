@@ -66,6 +66,14 @@ GHCustom.prototype.ExperimentTrajectory = function(lat,lon){
     this.GPXurl = "https://pmcn-graphhopper.tk/gpx?point=" + lat + "%2C" +lon +"&experiment=t";
 }
 
+GHCustom.prototype.SetStayPlace = function(lat,lon){
+    this.GPXurl = "https://pmcn-graphhopper.tk/gpx?point=" + lat + "%2C" +lon +"&setStay=t";
+}
+
+GHCustom.prototype.SetNowPosition = function(lat,lon){
+    this.GPXurl = "https://pmcn-graphhopper.tk/gpx?point=" + lat + "%2C" +lon +"&setPosition=t";
+}
+
 GHCustom.prototype.doRequest = function (url ,callback) {
     var that = this;
     $.ajax({

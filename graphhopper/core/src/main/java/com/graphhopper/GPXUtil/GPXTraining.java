@@ -17,7 +17,7 @@ public class GPXTraining {
     public double TrainWeighting(double CurrentWeighting, String PerTime){
         double EdgeWeighting = 0;
 
-        EdgeWeighting = (1 - AbnormalSigmoid(PerTime))  +  AbnormalSigmoid(PerTime) * CurrentWeighting;
+        EdgeWeighting = (1 - AbnormalSigmoid(PerTime)) * 3  +  AbnormalSigmoid(PerTime) * CurrentWeighting;
 
         return EdgeWeighting;
     }
@@ -29,6 +29,8 @@ public class GPXTraining {
 
         return  edgeWeighting;
     }
+
+
     /**time recovery function**/
     private double AbnormalSigmoid(String PerTime){
         double Riscore = 0 , Ti = 0;
@@ -53,4 +55,5 @@ public class GPXTraining {
 
         return  Riscore;
     }
+
 }

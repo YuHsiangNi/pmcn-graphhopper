@@ -51,7 +51,7 @@ public class DBHelper {
             preparedStatement = connection.prepareStatement("INSERT INTO gpx VALUES(?,?,?,?,?)");
 
             preparedStatement.setInt(1,edgeId);
-            preparedStatement.setDouble(2,0.05);
+            preparedStatement.setDouble(2,0.4);
             preparedStatement.setInt(3,1);
             preparedStatement.setInt(4,1);
             preparedStatement.setString(5,time);
@@ -65,7 +65,7 @@ public class DBHelper {
     }
 
     /**get Current Training Times**/
-    private int getTrainingTimes(){
+    public int getTrainingTimes(){
         int times = 0,DBtimes;
 
         try {
